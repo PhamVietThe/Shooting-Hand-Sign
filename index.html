@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBER-GESTURE // AR Shotgun, Mystic Fist & Black Hole</title>
+  
+  <!-- Modern Tech Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- Camera Video Feed -->
+    <video id="webcam" playsinline autoplay muted></video>
+
+    <!-- Fullscreen AR Weapon & Visual Effects Canvas -->
+    <canvas id="ar-canvas"></canvas>
+
+    <!-- Top Tactical HUD -->
+    <header class="hud-header">
+      <div class="hud-brand">
+        <div class="brand-badge">AR-09</div>
+        <div class="brand-text">
+          <span class="brand-title">CYBER GESTURE WEAPONS</span>
+          <span class="brand-sub">TACTICAL SHOTGUN // MYSTIC FIST // SINGULARITY</span>
+        </div>
+      </div>
+
+      <div class="hud-controls">
+        <div class="status-pill status-ready" id="status-pill">
+          <span class="status-dot"></span>
+          <span class="status-text" id="status-text">INITIALIZING</span>
+        </div>
+
+        <div class="hud-pill" id="fps-counter">60 FPS</div>
+
+        <div class="hud-score">
+          <span class="score-label">SCORE</span>
+          <span class="score-val" id="score-val">0</span>
+        </div>
+
+        <button id="btn-sound" class="hud-btn" title="Toggle Procedural Audio">
+          <span class="btn-icon">🔊</span>
+          <span class="btn-label">SFX: ON</span>
+        </button>
+
+        <button id="btn-mirror" class="hud-btn active" title="Mirror Camera">
+          <span class="btn-icon">🪞</span>
+          <span class="btn-label">MIRROR</span>
+        </button>
+
+        <button id="btn-targets" class="hud-btn active" title="Toggle Target Practice Drones">
+          <span class="btn-icon">🎯</span>
+          <span class="btn-label">TARGETS: ON</span>
+        </button>
+
+        <button id="btn-autofire" class="hud-btn" title="Toggle Auto-Fire vs Trigger Tap">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-label">TRIGGER: TAP</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Demo Mode Gesture Switcher Bar -->
+    <div id="demo-bar" class="demo-bar hidden">
+      <span class="demo-title">DEMO MODE SELECTOR:</span>
+      <button id="demo-gun" class="demo-btn active">👉 SHOTGUN</button>
+      <button id="demo-fist" class="demo-btn">✊ MYSTIC FIST</button>
+      <button id="demo-hole" class="demo-btn">☝ BLACK HOLE</button>
+    </div>
+
+    <!-- Bottom Gesture Reference & Feedback Cards -->
+    <footer class="hud-footer">
+      <div class="gesture-cards">
+        <!-- Gun Sign Card -->
+        <div class="hud-card" id="card-gun">
+          <div class="card-glow"></div>
+          <div class="card-icon">👉</div>
+          <div class="card-info">
+            <span class="card-name">TACTICAL SHOTGUN</span>
+            <span class="card-desc">Thumb up + Index forward. Tap thumb down or click/spacebar to BLAST!</span>
+          </div>
+          <span class="card-state">READY</span>
+        </div>
+
+        <!-- Fist Card -->
+        <div class="hud-card" id="card-fist">
+          <div class="card-glow"></div>
+          <div class="card-icon">✊</div>
+          <div class="card-info">
+            <span class="card-name">PURPLE MYSTIC AURA</span>
+            <span class="card-desc">Clench all fingers into a tight fist to summon swirling violet flames & lightning.</span>
+          </div>
+          <span class="card-state">READY</span>
+        </div>
+
+        <!-- Point Up Card -->
+        <div class="hud-card" id="card-hole">
+          <div class="card-glow"></div>
+          <div class="card-icon">☝</div>
+          <div class="card-info">
+            <span class="card-name">BLACK HOLE SINGULARITY</span>
+            <span class="card-desc">Point index finger straight up to open a cosmic gravitational black hole.</span>
+          </div>
+          <span class="card-state">READY</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Initial Modal / Camera Permission -->
+    <div class="start-modal" id="start-modal">
+      <div class="modal-card">
+        <div class="modal-corner top-left"></div>
+        <div class="modal-corner top-right"></div>
+        <div class="modal-corner bottom-left"></div>
+        <div class="modal-corner bottom-right"></div>
+
+        <div class="modal-badge">HIGH-PERFORMANCE AR</div>
+        <h2>CYBER GESTURE ARSENAL</h2>
+        <p class="modal-desc">
+          Zero-lag hand tracking with procedural sound effects and high-speed GPU rendering:
+        </p>
+
+        <ul class="modal-features">
+          <li><strong>👉 Hand Gun Sign:</strong> Tactical AR Shotgun with recoil, pump reload, ejected brass shells, and buckshot pellets that blast floating drones.</li>
+          <li><strong>✊ Clenched Fist:</strong> Mystic purple aura shield with swirling violet energy flames and crackling lightning.</li>
+          <li><strong>☝ 1 Finger Point Up:</strong> Relativistic Black Hole with spinning accretion disk and gravitational particle pull.</li>
+        </ul>
+
+        <div class="modal-actions">
+          <button id="btn-start-camera" class="cyber-btn cyber-btn-primary">
+            <span class="cyber-btn-glitch"></span>
+            <span>LAUNCH CAMERA AR</span>
+          </button>
+          <button id="btn-start-demo" class="cyber-btn cyber-btn-secondary">
+            <span>TRY SIMULATION DEMO</span>
+          </button>
+        </div>
+
+        <p class="modal-footnote">
+          Optimized for smooth 60 FPS on all devices. No video is uploaded; all processing runs locally on your device.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MediaPipe Hands CDN Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <!-- Main ES6 Application -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
